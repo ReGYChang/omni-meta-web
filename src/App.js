@@ -21,10 +21,10 @@ function App() {
       }
 
       const accounts = await ethereum.request({
-        method:"eth_accounts"
+        method: "eth_accounts"
       })
 
-      if (accounts.length !== 0){
+      if (accounts.length !== 0) {
         const account = accounts[0]
         console.log(`found account with address`, account)
         setAccount(account)
@@ -71,7 +71,7 @@ function App() {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const CounterContract = new ethers.Contract(contractAddress,contractABI,signer);
+        const CounterContract = new ethers.Contract(contractAddress, contractABI, signer);
 
         setIsLoading(true);
 
@@ -98,7 +98,7 @@ function App() {
 
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()
-      const CounterContract = new ethers.Contract(contractAddress,contractABI,signer)
+      const CounterContract = new ethers.Contract(contractAddress, contractABI, signer)
 
       const counts = await CounterContract.getCounts();
       setCount(counts.toNumber());
@@ -127,10 +127,10 @@ function App() {
           <h3 className="text-3xl text-center text-white text-hold mt-8">
             Logged in as {""}
             <strong>
-              {`${account.substring(0,4)}...${account.substring(account.length - 4)}`}
+              {`${account.substring(0, 4)}...${account.substring(account.length - 4)}`}
             </strong>
           </h3>
-    
+
           <button className="rounded-full py-6 px-12 text-3xl mt-16 text-white bg-purple-700 hover:scale-105 hover:bg-purple-600 transition" onClick={mint}>
             {isLoading ?
               <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -141,7 +141,7 @@ function App() {
               </svg>
               : (
                 'MINT'
-            )}
+              )}
           </button>
         </>
       )
