@@ -55,6 +55,7 @@ function App() {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
+
       console.log(accounts[0]);
 
       setAccount(accounts[0]);
@@ -72,8 +73,13 @@ function App() {
         const signer = provider.getSigner();
         const CounterContract = new ethers.Contract(contractAddress,contractABI,signer);
 
+        setIsLoading(true);
+
         let tx = await CounterContract.add();
         await tx.wait();
+
+        setIsLoading(false);
+
         await getCounts();
       }
     } catch (err) {
@@ -99,6 +105,7 @@ function App() {
 
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
     }
   }
 
@@ -125,15 +132,16 @@ function App() {
           </h3>
     
           <button className="rounded-full py-6 px-12 text-3xl mt-16 text-white bg-purple-700 hover:scale-105 hover:bg-purple-600 transition" onClick={mint}>
-            {/* {isLoading ?
+            {isLoading ?
               <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4">
                 </circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-"></path>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 0014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
               </svg>
-            } */}
-            MINT
+              : (
+                'MINT'
+            )}
           </button>
         </>
       )
